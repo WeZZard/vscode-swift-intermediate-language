@@ -1,0 +1,51 @@
+{
+	"name": "swift-intermediate-language",
+	"displayName": "Swift Intermediate Language",
+	"description": "Swift Intermediate Language",
+	"version": "0.1.0",
+	"publisher": "WeZZard",
+	"engines": {
+		"vscode": "^0.10.1"
+	},
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "sil",
+				"aliases": [
+					"SIL",
+					"sil"
+				],
+				"extensions": [
+					".sil",
+					".SIL"
+				],
+				"configuration": "./sil.configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "sil",
+				"scopeName": "source.sil",
+				"path": "./sil.tmbundle/Syntaxes/SIL.tmLanguage"
+			}
+		],
+		"snippets": [
+			{
+				"language": "sil",
+				"path": "./snippets.json"
+			}
+		]
+	},
+	"bugs": {
+		"url": "https://github.com/WeZZard/vscode-swift-intermediate-language/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/WeZZard/vscode-swift-intermediate-language.git"
+	},
+	"homepage": "https://github.com/WeZZard/vscode-swift-intermediate-language/blob/master/README.md"
+}
