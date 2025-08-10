@@ -83,7 +83,7 @@
 			<key>comment</key>
 			<string>SIL Swift Attributes</string>
 			<key>match</key>
-			<string>\[(canonical|ossa|transparent|thunk|signature_optimized_thunk|reabstraction_thunk|dynamically_replacable|exact_self_class|without_actually_escaping|global_init|lazy_getter|weak_imported|never|always|Onone|Ospeed|Osize|readonly|readnone|readwrite|releasenone|_semantics " [A-Za-z._0-9]+ "|_specialize " [A-Za-z._0-9]+ "|no_locks|no_allocation|forward|reverse|normal|linear|dynamic_lifetime|lexical|moved|objc|stack|tail_elems|throws|poison|lexical|initialization|assign|assign_wrapped_value|var|rootself|crossmodulerootself|derivedself|derivedselfonly|delegatingself|delegatingselfallocated|take|init|read|modify|deinit|unknown|static|dynamic|unsafe|no_nested_conflict|builtin|abort|native|keep_unique|nothrow|immutable|strict|invariant|original|jvp|vjp|transpose|no_implicit_copy|no_copy|owned|guaranteed)\]</string>
+			<string>\[(canonical|ossa|transparent|thunk|signature_optimized_thunk|reabstraction_thunk|back_deployed_thunk|dynamically_replacable|exact_self_class|without_actually_escaping|global_init|global_init_once_fn|lazy_getter|weak_imported|stack_protection|never|always|Onone|Ospeed|Osize|readonly|readnone|readwrite|releasenone|_semantics " [A-Za-z._0-9]+ "|_specialize " [A-Za-z._0-9]+ "|no_locks|no_allocation|forward|reverse|normal|linear|dynamic_lifetime|lexical|moved|objc|stack|tail_elems|throws|poison|lexical|initialization|assign|assign_wrapped_value|var|rootself|crossmodulerootself|derivedself|derivedselfonly|delegatingself|delegatingselfallocated|take|init|read|modify|deinit|unknown|static|dynamic|unsafe|no_nested_conflict|builtin|abort|native|keep_unique|nothrow|immutable|strict|invariant|original|jvp|vjp|transpose|no_implicit_copy|no_copy|owned|guaranteed)\]</string>
 			<key>name</key>
 			<string>storage.modifier.sil.sil-instruction-attributes</string>
 		</dict>
@@ -211,7 +211,7 @@
 			<key>comment</key>
 			<string>SIL V-Table</string>
 			<key>match</key>
-			<string>\b(sil_witnesstable)\b</string>
+			<string>\b(sil_vtable)\b</string>
 			<key>name</key>
 			<string>storage.type.sil.vtable</string>
 		</dict>
@@ -219,7 +219,7 @@
 			<key>comment</key>
 			<string>SIL Witness Tables</string>
 			<key>match</key>
-			<string>\b(sil_witnesstable|sil_differentiability_witness|sil_default_witness_table)\b</string>
+			<string>\b(sil_witness_table|sil_differentiability_witness|sil_default_witness_table)\b</string>
 			<key>name</key>
 			<string>storage.type.sil.witness-tables</string>
 		</dict>
@@ -243,7 +243,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Allocation and Deallocation</string>
 			<key>match</key>
-			<string>\b(alloc_stack|alloc_ref|alloc_ref_dynamic|alloc_box|alloc_global|get_async_continuation|get_async_continuation_addr|hop_to_executor|extract_executor|dealloc_stack|dealloc_box|project_box|dealloc_stack_ref|dealloc_ref|dealloc_partial_ref)\b</string>
+			<string>\b(alloc_stack|alloc_pack|alloc_pack_metadata|alloc_ref|alloc_ref_dynamic|alloc_box|alloc_global|get_async_continuation|get_async_continuation_addr|hop_to_executor|extract_executor|dealloc_stack|dealloc_box|project_box|dealloc_stack_ref|dealloc_ref|dealloc_partial_ref|dealloc_pack|dealloc_pack_metadata|begin_dealloc_ref)\b</string>
 			<key>name</key>
 			<string>support.function.sil.instruction.allocation-and-deallocation</string>
 		</dict>
@@ -251,7 +251,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Debug Information</string>
 			<key>match</key>
-			<string>\b(debug_value)\b</string>
+			<string>\b(debug_value|debug_step)\b</string>
 			<key>name</key>
 			<string>support.variable.sil.instruction.debug-information</string>
 		</dict>
@@ -259,7 +259,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Accessing Memory</string>
 			<key>match</key>
-			<string>\b(load|store|load_borrow|store_borrow|begin_borrow|end_borrow|end_lifetime|assign|assign_by_wrapper|mark_uninitialized|mark_function_escape|mark_uninitialized_behavior|copy_addr|destroy_addr|index_addr|tail_addr|index_raw_pointer|bind_memory|rebind_memory|begin_access|end_access|begin_unpaired_access|end_unpaired_access)\b</string>
+			<string>\b(load|store|load_borrow|store_borrow|begin_borrow|end_borrow|end_lifetime|extend_lifetime|assign|assign_by_wrapper|mark_uninitialized|mark_function_escape|mark_uninitialized_behavior|copy_addr|explicit_copy_addr|destroy_addr|index_addr|tail_addr|index_raw_pointer|bind_memory|rebind_memory|begin_access|end_access|begin_unpaired_access|end_unpaired_access|mark_dependence_addr)\b</string>
 			<key>name</key>
 			<string>support.function.sil.instruction.accessing-memory</string>
 		</dict>
@@ -267,7 +267,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Reference Counting</string>
 			<key>match</key>
-			<string>\b(strong_retain|strong_release|set_deallocating|strong_copy_unowned_value|strong_retain_unowned|unowned_retain|unowned_release|load_weak|store_weak|load_unowned|store_unowned|fix_lifetime|mark_dependence|is_unique|begin_cow_mutation|end_cow_mutation|is_escaping_closure|copy_block|copy_block_without_escaping|builtin "unsafeGuaranteed"|builtin "unsafeGuaranteedEnd")\b</string>
+			<string>\b(strong_retain|strong_release|set_deallocating|strong_copy_unowned_value|strong_copy_weak_value|strong_retain_unowned|unowned_copy_value|unowned_retain|unowned_release|unmanaged_retain_value|unmanaged_release_value|load_weak|store_weak|load_unowned|store_unowned|fix_lifetime|mark_dependence|is_unique|begin_cow_mutation|end_cow_mutation|end_cow_mutation_addr|is_escaping_closure|copy_block|copy_block_without_escaping|builtin "unsafeGuaranteed"|builtin "unsafeGuaranteedEnd")\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.reference-counting</string>
 		</dict>
@@ -299,7 +299,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Metatypes</string>
 			<key>match</key>
-			<string>\b(metatype|value_metatype|existential_metatype|objc_protocol)\b</string>
+			<string>\b(metatype|value_metatype|existential_metatype|objc_protocol|type_value)\b</string>
 			<key>name</key>
 			<string>support.class.sil.instruction.metatypes</string>
 		</dict>
@@ -307,7 +307,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Aggregate Types</string>
 			<key>match</key>
-			<string>\b(retain_value|retain_value_addr|unmanaged_retain_value|strong_copy_unmanaged_value|copy_value|explicit_copy_value|move_value|release_value|release_value_addr|unmanaged_release_value|destroy_value|autorelease_value|tuple|tuple_extract|tuple_element_addr|destructure_tuple|struct|struct_extract|struct_element_addr|destructure_struct|object|ref_element_addr|ref_tail_addr)\b</string>
+			<string>\b(retain_value|retain_value_addr|unmanaged_retain_value|strong_copy_unmanaged_value|copy_value|explicit_copy_value|move_value|release_value|release_value_addr|unmanaged_release_value|destroy_value|autorelease_value|tuple|tuple_extract|tuple_element_addr|tuple_addr_constructor|destructure_tuple|tuple_pack_element_addr|tuple_pack_extract|struct|struct_extract|struct_element_addr|destructure_struct|object|ref_element_addr|ref_tail_addr)\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.aggregate-types</string>
 		</dict>
@@ -315,7 +315,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Enums</string>
 			<key>match</key>
-			<string>\b(enum|unchecked_enum_data|init_enum_data_addr|inject_enum_addr|unchecked_take_enum_data_addr|select_enum|select_enum_addr)\b</string>
+			<string>\b(enum|unchecked_enum_data|init_enum_data_addr|inject_enum_addr|unchecked_take_enum_data_addr|select_enum|select_enum_addr|throw_addr)\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.enums</string>
 		</dict>
@@ -323,7 +323,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Protocol and Protocol Composition Types</string>
 			<key>match</key>
-			<string>\b(init_existential_addr|init_existential_value|deinit_existential_addr|deinit_existential_value|open_existential_addr|open_existential_value|init_existential_ref|open_existential_ref|init_existential_metatype|open_existential_metatype|alloc_existential_box|project_existential_box|open_existential_box|open_existential_box_value|dealloc_existential_box)\b</string>
+			<string>\b(init_existential_addr|init_existential_value|deinit_existential_addr|deinit_existential_value|open_existential_addr|open_existential_value|init_existential_ref|open_existential_ref|init_existential_metatype|open_existential_metatype|alloc_existential_box|project_existential_box|open_existential_box|open_existential_box_value|dealloc_existential_box|objc_existential_metatype_to_object|objc_metatype_to_object|objc_protocol|objc_to_thick_metatype)\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.protocol-and-protocol-composition-types</string>
 		</dict>
@@ -339,7 +339,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Unchecked Conversions</string>
 			<key>match</key>
-			<string>\b(upcast|address_to_pointer|pointer_to_address|unchecked_ref_cast|unchecked_ref_cast_addr|unchecked_addr_cast|unchecked_trivial_bit_cast|unchecked_bitwise_cast|unchecked_value_cast|unchecked_ownership_conversion|ref_to_raw_pointer|raw_pointer_to_ref|ref_to_unowned|unowned_to_ref|ref_to_unmanaged|unmanaged_to_ref|convert_function|convert_escape_to_noescape|classify_bridge_object|value_to_bridge_object|ref_to_bridge_object|bridge_object_to_ref|bridge_object_to_word|thin_to_thick_function|thick_to_objc_metatype|objc_to_thick_metatype|objc_metatype_to_object|objc_existential_metatype_to_object)\b</string>
+			<string>\b(upcast|address_to_pointer|pointer_to_address|unchecked_ref_cast|unchecked_ref_cast_addr|unchecked_addr_cast|unchecked_trivial_bit_cast|unchecked_bitwise_cast|unchecked_value_cast|unchecked_ownership_conversion|ref_to_raw_pointer|raw_pointer_to_ref|ref_to_unowned|unowned_to_ref|ref_to_unmanaged|unmanaged_to_ref|convert_function|convert_escape_to_noescape|classify_bridge_object|value_to_bridge_object|ref_to_bridge_object|bridge_object_to_ref|bridge_object_to_word|thin_to_thick_function|thick_to_objc_metatype|objc_to_thick_metatype|objc_metatype_to_object|objc_existential_metatype_to_object|function_extract_isolation)\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.unchecked-conversions</string>
 		</dict>
@@ -363,7 +363,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - Terminators</string>
 			<key>match</key>
-			<string>\b(unreachable|return|throw|yield|unwind|br|cond_br|switch_value|select_value|switch_enum|switch_enum_addr|dynamic_method_br|checked_cast_br|checked_cast_addr_br|try_apply|await_async_continuation)\b</string>
+			<string>\b(unreachable|return|throw|throw_addr|yield|unwind|br|cond_br|switch_value|select_value|switch_enum|switch_enum_addr|dynamic_method_br|checked_cast_br|checked_cast_addr_br|try_apply|await_async_continuation)\b</string>
 			<key>name</key>
 			<string>keyword.control.sil.instruction.terminators</string>
 		</dict>
@@ -387,7 +387,7 @@
 			<key>comment</key>
 			<string>SIL Instructions - No Implicit Copy and No Escape Value Instructions</string>
 			<key>match</key>
-			<string>\b(copyable_to_moveonlywrapper|moveonlywrapper_to_copyable)\b</string>
+			<string>\b(copyable_to_moveonlywrapper|copyable_to_moveonlywrapper_addr|moveonlywrapper_to_copyable|moveonlywrapper_to_copyable_addr)\b</string>
 			<key>name</key>
 			<string>keyword.operator.sil.instruction.no-implicit-copy-and-no-escape-value-instructions</string>
 		</dict>
@@ -403,7 +403,7 @@
 			<key>comment</key>
 			<string>SIL Function Name</string>
 			<key>match</key>
-			<string>@(\$?)[A-Za-z_0-9]+\b</string>
+			<string>@[\$A-Za-z_0-9\.]+\b</string>
 			<key>name</key>
 			<string>variable.other.sil.function-name</string>
 		</dict>
