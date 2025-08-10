@@ -329,6 +329,14 @@
 		</dict>
 		<dict>
 			<key>comment</key>
+			<string>SIL Instructions - Pack Operations</string>
+			<key>match</key>
+			<string>\b(scalar_pack_index|pack_pack_index|dynamic_pack_index|pack_length|open_pack_element|pack_element_get|pack_element_set)\b</string>
+			<key>name</key>
+			<string>keyword.operator.sil.instruction.pack-operations</string>
+		</dict>
+		<dict>
+			<key>comment</key>
 			<string>SIL Instructions - Blocks</string>
 			<key>match</key>
 			<string>\b(project_block_storage|init_block_storage_header)\b</string>
